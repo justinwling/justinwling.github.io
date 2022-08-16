@@ -32,7 +32,7 @@
 		$('#nav > ul').dropotron({
 			alignment: 'right'
 		});
-
+/*
 	// NavPanel.
 
 		// Button.
@@ -62,7 +62,7 @@
 					target: $body,
 					visibleClass: 'navPanel-visible'
 				});
-
+*/
 	// Header.
 		if (!browser.mobile
 		&&	$header.hasClass('alt')
