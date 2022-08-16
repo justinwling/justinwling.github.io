@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SQL Data Exploration using COVID-19 Data</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload" style="background-image:url(/images/bannerwhite.jpg); background-repeat:no-repeat; background-size: 100%; background-color: rgb(239, 239, 239);">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+		
+		
+						
+					<h4 style="color:white;" align="center"><a href="index.html" style="border-bottom: transparent;">HOME</a>	&nbsp&nbsp|&nbsp&nbsp;<a href="mailto:justinwling@gmail.com" style="border-bottom: transparent;">justinwling@gmail.com</a>
+								&nbsp&nbsp|&nbsp&nbsp;<a href="http://linkedin.com/in/justinwling" class="icon brands fa-linkedin fa-1x" target="_blank"><span class="label">Facebook</span></a>
+								&nbsp&nbsp;|&nbsp&nbsp;<a href="http://github.com/justinwling" class="icon brands fa-github fa-1x" target="_blank"><span class="label">Instagram</span></a>
+							
+					</h4>	
+			
+			
+	
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container">
+					<header>
+						<h2>SQL Data Exploration using COVID-19 Data</h2>
+						<p style="color: black;"><u>Some of the SQL techniques used</u>:<br>UPDATE, NULLIF(), order by, MAX(), cast(), group by, table JOIN
+						</p>
+					</header>
+					<div class="box">
+						<!--<span class="image featured"><img src="images/pic01.jpg" alt="" /></span> -->
+						<h3>Introduction</h3>
+						<p>This project uses COVID-19 data from "Our World in Data" between 02-24-20 and 04-30-21. 
+							The data was explored to see if there were any notable patterns or relationship that could be seen by using various SQL tool and techniques.</p>
+
+						<p>The data was downloaded as excel files and converted to CSV files before being imported into a Microsoft SQL Server. The two databases are called dbo.CovidDeaths & dbo.CovidVaccinations</p>
+						<p>To view all of the code, please visit the GitHub Repository linked here: <a href="https://github.com/justinwling/SQL-Data-Exploration-of-COVID-19-Data" target="_blank">SQL Data Exploration GitHub Repository</a></b>. I have highlighted a few parts of the project below.</p>	
+						<br>	
+						<div class="row">
+							<div class="row-6 row-12-mobilep">
+								<h3>Updating CovidDeaths table using NULLIF()</h3>
+								<p>In order to avoid "divide by zero" errors in later calculations, any values of zero in the "total_cases" column are replaced with NULL. Also, any blank entrys for the column "continent" is replaced with a NULL value as well.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot1-NULLIF.jpg" width="100%" ></p>
+								<p><br></p>
+							</div>
+							<div class="row-6 row-12-mobilep">
+								<h3>Comparing total deaths to total cases as a percentage in the US</h3>
+								<p>Data from the "total_deaths" and "total_cases" columns were used to calculate the percent of total deaths vs total cases in the US and sorted from highest to lowest.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot2-DeathPercent.jpg" width="100%"></p>
+								<p>The results show the highest death percentages to be in March and May of 2020, which makes sense since it was early in the pandemic. But at the same time, the data in March is likely to be skewed due to very small number of cases and deaths. This could have been because early cases and deaths were not being reported and recorded as accurately at that time.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot3-DeathPercentResults.jpg" width="100%"></p>
+								<p><br></p>
+							</div>
+							<div class="row-6 row-12-mobilep">
+								<h3>Countries with the highest percent of cases per capita</h3>
+								<p>This query uses the max total number of cases of COVID-19 and divides it by the population. The results were sorted/grouped by country, which is in the "location" columnn when the "continent" column does NOT have a NULL value. When "continent" is NULL, the "location" column contains the continent name instead of country name.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot4-CasesperCapita.jpg" width="100%"></p>
+								<p>The results show that the highest number of cases per capita during the time frame of my dataset by country was as much as 17.13%. As with all the data in this dataset, it's possible that there are inaccuracies due to data reporting issues, where some countries may not be able to report their data as frequently, accurately, completely, etc.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot4-CasesperCapitaResults.jpg" width="100%"></p>
+							<p><br></p>
+						</div>
+							<div class="row-6 row-12-mobilep">
+								<h3>Joining the CovidDeaths & CovidVaccinations tables to compare data</h3>
+								<p>By joining the two tables together, I'm able to compare the data column "new_vaccinations" with "population". In order to get an idea of total number of vaccinations over time I used the SUM() expression on "new_vaccinations" and partitioned the data by location.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot5-TableJoinwithVac.jpg" width="100%"></p>
+								<p>Looking at the last two columns, I can see that the query appears to be working correctly by adding the new vaccinations each day to a total or sum of all vaccinations given for a particular country.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQLDataExploration/Screenshot6-TableJoinwithVacResults.jpg" width="100%"></p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+				
+					<ul class="copyright">
+						<li>&copy; Justin W Ling. All rights reserved.</li>
+					</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

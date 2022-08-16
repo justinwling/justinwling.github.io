@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>SQL Data Cleaning using Housing Sales Data</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload" style="background-image:url(/images/bannerwhite.jpg); background-repeat:no-repeat; background-size: 100%; background-color: rgb(239, 239, 239);">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+		
+		
+						
+					<h4 style="color:white;" align="center"><a href="index.html" style="border-bottom: transparent;">HOME</a>	&nbsp&nbsp|&nbsp&nbsp;<a href="mailto:justinwling@gmail.com" style="border-bottom: transparent;">justinwling@gmail.com</a>
+								&nbsp&nbsp|&nbsp&nbsp;<a href="http://linkedin.com/in/justinwling" class="icon brands fa-linkedin fa-1x" target="_blank"><span class="label">Facebook</span></a>
+								&nbsp&nbsp;|&nbsp&nbsp;<a href="http://github.com/justinwling" class="icon brands fa-github fa-1x" target="_blank"><span class="label">Instagram</span></a>
+							
+					</h4>	
+			
+			
+	
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container">
+					<header>
+						<h2>SQL Data Cleaning using Housing Sales Data</h2>
+						<p style="color: black;"><u>Some of the SQL techniques used</u>:<br>ALTER Table, ALTER COLUMN data type, ISNULL(), splitting address into separate columns (address, city, state) using SUBSTRING() & PARSENAME()  
+						</p>
+					</header>
+					
+					<div class="box">
+						<!--<span class="image featured"><img src="images/pic01.jpg" alt="" /></span> -->
+						<h3>Introduction</h3>
+						<p>This project uses housing sales data from Nashville, TN including information such as: SaleDate, PropertyAddress, SalePrice, TotalValue, YearBuilt, Unique ID, and Parcel ID which is unique to a property</p>
+						<p>To view all of the code, please visit the GitHub Repository linked here: <a href="https://github.com/justinwling/SQL-Data-Cleaning-of-Housing-Sales-Data" target="_blank">SQL Data Cleaning GitHub Repository</a></b>. I have highlighted a few parts of the project below.</p>	
+						<br>	
+						<div class="row">
+							<div class="row-6 row-12-mobilep">
+								<h3>Cleaning the Date data by removing unused timestamps</h3>
+								<p>The column "SaleDate" includes the date and also a timestamp that only contains "00:00:00.000"</p>
+								<p><center><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot1_SalesDates_w_Timestamp.jpg"></center></p>
+								<p>The following code was used to ALTER the table and change the data type for column SaleDate so that it no longer includes the timestamp.</p>
+<pre>
+ALTER Table [SQL Data Cleaning].dbo.NashvilleHousing
+ALTER COlUMN SaleDate Date;
+	
+Select *
+From [SQL Data Cleaning].dbo.NashvilleHousing
+order by SaleDate
+</pre>						
+								<p><center><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot2_SalesDates_wo_Timestamp.jpg"></center></p>
+								<p><br></p>
+							</div>
+							<div class="row-6 row-12-mobilep">
+								<h3>Populating data that was left blank</h3>
+								<p>Some of the data for "PropertyAddress" was left blank, but since the "ParcelID" and "PropertyAddress" should always be connected. Any blank address that have a ParcelID should actually have the same address as any other row with the same ParcelID number.</p>
+								<p>By sorting the data by ParcelID, we can see two examples below where the PropertyAddress is NULL, but there's another row above the NULL value with the same ParcelID and a complete address in the "PropertyAddress" column</p>
+								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot3_NULLPropertyAddress.jpg"></p>
+								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot4_NULLPropertyAddressmatches.jpg" ></p>
+								
+								<p>In order to find matching ParcelIDs and use their address in the blank address, two temporary tables (a & b) were created from the original table to compare ParcelID values in each table and replace any NULL addresses with the value in any matching ParcelID rows. ISNULL() was used to look for "a.PropertyAddress" valkues that are NULL and repolace them with "b.PropertyAddress" that are not NULL.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot5_NULLPropertyAddressfilledcode.jpg" width="100%"></p>
+								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot6_NULLPropertyAddressfilled.jpg"></p>
+								
+								<p><br></p>
+							</div>
+				
+							<div class="row-6 row-12-mobilep">
+								<h3>Separating Address data into individual columns (address, city, & state)</h3>
+								<p>To make the data more usable in the future, it is useful to split the address into separate columns for the address and city. Below is an example of this using PARSENAME() and using commas as the delimiter since commas are only used to separate the address from city and state.</p>
+								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot7_OwnerAddressSplit.jpg" width="80%"></p>
+								
+								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot8_OwnerAddressSplitResults.jpg" width="80%"></p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+				
+					<ul class="copyright">
+						<li>&copy; Justin W Ling. All rights reserved.</li>
+					</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
