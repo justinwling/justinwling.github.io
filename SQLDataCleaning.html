@@ -56,7 +56,7 @@
 								<p>The following code was used to ALTER the table and change the data type for column SaleDate so that it no longer includes the timestamp.</p>
 <pre>
 ALTER Table [SQL Data Cleaning].dbo.NashvilleHousing
-ALTER COlUMN SaleDate Date;
+ALTER COLUMN SaleDate Date;
 	
 Select *
 From [SQL Data Cleaning].dbo.NashvilleHousing
@@ -72,7 +72,7 @@ order by SaleDate
 								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot3_NULLPropertyAddress.jpg"></p>
 								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot4_NULLPropertyAddressmatches.jpg" ></p>
 								
-								<p>In order to find matching ParcelIDs and use their address in the blank address, two temporary tables (a & b) were created from the original table to compare ParcelID values in each table and replace any NULL addresses with the value in any matching ParcelID rows. ISNULL() was used to look for "a.PropertyAddress" valkues that are NULL and repolace them with "b.PropertyAddress" that are not NULL.</p>
+								<p>In order to find matching ParcelIDs and use their address in the blank address, two temporary tables (a & b) were created from the original table to compare ParcelID values in each table and replace any NULL addresses with the value in any matching ParcelID rows. ISNULL() was used to look for "a.PropertyAddress" values that are NULL and replace them with "b.PropertyAddress" that are not NULL.</p>
 								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot5_NULLPropertyAddressfilledcode.jpg" width="100%"></p>
 								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot6_NULLPropertyAddressfilled.jpg"></p>
 								
@@ -80,7 +80,7 @@ order by SaleDate
 							</div>
 				
 							<div class="row-6 row-12-mobilep">
-								<h3>Separating Address data into individual columns (address, city, & state)</h3>
+								<h3>Separating address data into individual columns (address, city, & state)</h3>
 								<p>To make the data more usable in the future, it is useful to split the address into separate columns for the address and city. Below is an example of this using PARSENAME() and using commas as the delimiter since commas are only used to separate the address from city and state.</p>
 								<p><img style="border: 1px solid black;" src="/images/SQL Data Cleaning/Screenshot7_OwnerAddressSplit.jpg" width="80%"></p>
 								
